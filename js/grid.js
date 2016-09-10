@@ -4,7 +4,6 @@ onRowClicked = function(rowInfo) {
     event = rowInfo.event;
     console.log("Row Clicked.")
 };
-
 $("#dtsIssueGrid").jsGrid({
     width: "100%",
     height: "80%",
@@ -85,69 +84,55 @@ $("#dtsIssueGrid").jsGrid({
                 default:
                     break;
             }
-
         }
     }]
 });
-
 bindClickHandler = function() {
     for (var i = 0; i < $("input[class^='passButton']").length; i++) {
         $($("input[class^='passButton']")[i]).bind("click", onIssueButtonClick);
         $($("input[class^='failButton']")[i]).bind("click", onIssueButtonClick);
     }
-
     for (var i = 0; i < $("input[class^='testButton']").length; i++) {
         $($("input[class^='testButton']")[i]).bind("click", onIssueButtonClick);
     }
 };
-
 $(document).ready(function() {
     bindClickHandler();
 });
-
 operateIssue = function(elem) {
     issueButton = elem;
     easyDialog.open({
         container: {
-            content: 'Are you sure?',
+            content: '是否确定进行操作？',
             yesFn: function() {
-
                 $("#dtsIssueGrid").jsGrid("deleteItem", issueButton.parentNode.parentNode);
-
                 if ($(issueButton).attr("class").indexOf("passButton_") != -1) {
-                    console.log($(issueButton).attr("class").replace("passButton_", "") + " Tested Passed...")
+                    console.log("单号：" + $(issueButton).attr("class").replace("passButton_", "") + " 交叉验证通过")
                 }
-
                 if ($(issueButton).attr("class").indexOf("failButton_") != -1) {
-                    console.log($(issueButton).attr("class").replace("failButton_", "") + " Tested Failed...")
+                    console.log("单号：" + $(issueButton).attr("class").replace("failButton_", "") + " 交叉验证失败")
                 }
-
                 if ($(issueButton).attr("class").indexOf("testButton_") != -1) {
-                    console.log($(issueButton).attr("class").replace("testButton_", "") + " To Cross Test...")
+                    console.log("单号：" + $(issueButton).attr("class").replace("testButton_", "") + " 提交交叉验证")
                 }
-
                 bindClickHandler();
             },
             noFn: true
         }
     });
 };
-
 // doFailClickButton = function(event) {
 //     operateIssue(event.target);
 //     console.log($(event.target).attr("class").replace("failButton_", "") + " Tested Failed...");
 // };
-
 // doPassClickButton = function(event) {
 //     operateIssue(event.target);
 //     console.log($(event.target).attr("class").replace("passButton_", "") + " Tested Passed...");
 // };
-
 // doTestClickButton = function(event) {
 //     operateIssue(event.target);
 //     console.log($(event.target).attr("class").replace("testButton_", "") + " To Cross Test...");
 // };
-
 onIssueButtonClick = function(event, item) {
     operateIssue(event.target);
 };
