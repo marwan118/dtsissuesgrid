@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gird Demo</title>
+    <script type="text/javascript" src="js/lib/jquery/jquery-3.1.0.js"></script>
+    <link type="text/css" rel="stylesheet" href="js/lib/jsgrid-1.5.2/dist/jsgrid.min.css" />
+    <link type="text/css" rel="stylesheet" href="js/lib/jsgrid-1.5.2/css/theme.black.css" />
+    <link type="text/css" rel="stylesheet" href="js/lib/easydialog-v2.0/easydialog.css" />
+    <script type="text/javascript" src="js/lib/jsgrid-1.5.2/dist/jsgrid.min.js"></script>
+    <script type="text/javascript" src="js/lib/easydialog-v2.0/easydialog.min.js"></script>
+    <script type="text/javascript" src="issue-text-data.js"></script>
+    <style>
+    .divwarpper {
+        height: 30px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+    
+    input[class^="failButton"] {
+        /*height: 30px;*/
+        width: 100px;
+        background: red;
+        color: white;
+    }
+    
+    input[class^="passButton"] {
+        /*height: 30px;*/
+        width: 100px;
+        background: green;
+        color: white;
+    }
+    
+    input[class^="testButton"] {
+        /*height: 30px;*/
+        width: 200px;
+        background: grey;
+        color: white;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="dtsIssueGrid"></div>
+    <script src="js/grid.js"></script>
+</body>
+
+</html>
