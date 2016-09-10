@@ -4,6 +4,23 @@ onRowClicked = function(rowInfo) {
     event = rowInfo.event;
     console.log("Row Clicked.")
 };
+
+
+onIssueButtonClick = function(event, item) {
+    operateIssue(event.target);
+};
+
+
+bindClickHandler = function() {
+    for (var i = 0; i < $("input[class^='passButton']").length; i++) {
+        $($("input[class^='passButton']")[i]).bind("click", onIssueButtonClick);
+        $($("input[class^='failButton']")[i]).bind("click", onIssueButtonClick);
+    }
+    for (var i = 0; i < $("input[class^='testButton']").length; i++) {
+        $($("input[class^='testButton']")[i]).bind("click", onIssueButtonClick);
+    }
+};
+
 $("#dtsIssueGrid").jsGrid({
     width: "100%",
     height: "80%",
@@ -12,6 +29,7 @@ $("#dtsIssueGrid").jsGrid({
     sorting: true,
     paging: true,
     confirmDeleting: false,
+    onRefreshed:bindClickHandler,
     data: issues,
     fields: [{
         name: "Ticket No",
@@ -87,15 +105,7 @@ $("#dtsIssueGrid").jsGrid({
         }
     }]
 });
-bindClickHandler = function() {
-    for (var i = 0; i < $("input[class^='passButton']").length; i++) {
-        $($("input[class^='passButton']")[i]).bind("click", onIssueButtonClick);
-        $($("input[class^='failButton']")[i]).bind("click", onIssueButtonClick);
-    }
-    for (var i = 0; i < $("input[class^='testButton']").length; i++) {
-        $($("input[class^='testButton']")[i]).bind("click", onIssueButtonClick);
-    }
-};
+
 $(document).ready(function() {
     bindClickHandler();
 });
@@ -115,24 +125,9 @@ operateIssue = function(elem) {
                 if ($(issueButton).attr("class").indexOf("testButton_") != -1) {
                     console.log("单号：" + $(issueButton).attr("class").replace("testButton_", "") + " 提交交叉验证")
                 }
-                bindClickHandler();
+                // bindClickHandler();
             },
             noFn: true
         }
     });
-};
-// doFailClickButton = function(event) {
-//     operateIssue(event.target);
-//     console.log($(event.target).attr("class").replace("failButton_", "") + " Tested Failed...");
-// };
-// doPassClickButton = function(event) {
-//     operateIssue(event.target);
-//     console.log($(event.target).attr("class").replace("passButton_", "") + " Tested Passed...");
-// };
-// doTestClickButton = function(event) {
-//     operateIssue(event.target);
-//     console.log($(event.target).attr("class").replace("testButton_", "") + " To Cross Test...");
-// };
-onIssueButtonClick = function(event, item) {
-    operateIssue(event.target);
 };
