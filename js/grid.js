@@ -92,12 +92,12 @@ $("#dtsIssueGrid").jsGrid({
 
 bindClickHandler = function() {
     for (var i = 0; i < $("input[class^='passButton']").length; i++) {
-        $($("input[class^='passButton']")[i]).bind("click", doPassClickButton);
-        $($("input[class^='failButton']")[i]).bind("click", doFailClickButton);
+        $($("input[class^='passButton']")[i]).bind("click", onIssueButtonClick);
+        $($("input[class^='failButton']")[i]).bind("click", onIssueButtonClick);
     }
 
     for (var i = 0; i < $("input[class^='testButton']").length; i++) {
-        $($("input[class^='testButton']")[i]).bind("click", doTestClickButton);
+        $($("input[class^='testButton']")[i]).bind("click", onIssueButtonClick);
     }
 };
 
@@ -105,13 +105,27 @@ $(document).ready(function() {
     bindClickHandler();
 });
 
-deleteRowByItem = function(item) {
-    rowItemToBeDelete = item;
+operateIssue = function(elem) {
+    issueButton = elem;
     easyDialog.open({
         container: {
             content: 'Are you sure?',
-            yesFn: function(event) {
-                $("#dtsIssueGrid").jsGrid("deleteItem", rowItemToBeDelete.parentNode.parentNode);
+            yesFn: function() {
+
+                $("#dtsIssueGrid").jsGrid("deleteItem", issueButton.parentNode.parentNode);
+
+                if ($(issueButton).attr("class").indexOf("passButton_") != -1) {
+                    console.log($(issueButton).attr("class").replace("passButton_", "") + " Tested Passed...")
+                }
+
+                if ($(issueButton).attr("class").indexOf("failButton_") != -1) {
+                    console.log($(issueButton).attr("class").replace("failButton_", "") + " Tested Failed...")
+                }
+
+                if ($(issueButton).attr("class").indexOf("testButton_") != -1) {
+                    console.log($(issueButton).attr("class").replace("testButton_", "") + " To Cross Test...")
+                }
+
                 bindClickHandler();
             },
             noFn: true
@@ -119,17 +133,21 @@ deleteRowByItem = function(item) {
     });
 };
 
-doFailClickButton = function(event) {
-    deleteRowByItem(event.target);
-    console.log($(event.target).attr("class").replace("failButton_", "") + " Tested Failed...");
-};
+// doFailClickButton = function(event) {
+//     operateIssue(event.target);
+//     console.log($(event.target).attr("class").replace("failButton_", "") + " Tested Failed...");
+// };
 
-doPassClickButton = function(event) {
-    deleteRowByItem(event.target);
-    console.log($(event.target).attr("class").replace("passButton_", "") + " Tested Passed...");
-};
+// doPassClickButton = function(event) {
+//     operateIssue(event.target);
+//     console.log($(event.target).attr("class").replace("passButton_", "") + " Tested Passed...");
+// };
 
-doTestClickButton = function(event) {
-    deleteRowByItem(event.target);
-    console.log($(event.target).attr("class").replace("testButton_", "") + " To Cross Test...");
+// doTestClickButton = function(event) {
+//     operateIssue(event.target);
+//     console.log($(event.target).attr("class").replace("testButton_", "") + " To Cross Test...");
+// };
+
+onIssueButtonClick = function(event, item) {
+    operateIssue(event.target);
 };
