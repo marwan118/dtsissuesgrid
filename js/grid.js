@@ -11,7 +11,7 @@ $("#dtsIssueGrid").jsGrid({
     inserting: false,
     editing: false,
     sorting: true,
-    paging: true,
+    paging: false,
     confirmDeleting: false,
     data: issues,
     fields: [{
@@ -76,78 +76,58 @@ $("#dtsIssueGrid").jsGrid({
         width: 250,
         itemTemplate: function(value, item) {
             switch (item["Current Status"]) {
-                case "Close":
-                    return $("<input type='button' value='Cross Test' class='testButton_" + item["Ticket No"] + "'>");
-                    break;
                 case "Solution Implementation":
-                    return $("<input type='button' value='Test Passed' class='passButton_" + item["Ticket No"] + "'><input type='button' value='Test Failed' class='failButton_" + item["Ticket No"] + "'>");
+                    return $("<input>").attr("type", "button").attr("value", "通过").attr("class", "passButton_" + item["Ticket No"]).on("click", function() {
+                        easyDialog.open({
+                            container: {
+                                content: '是否确认操作？',
+                                yesFn: function() {
+                                    //todo 验证通过逻辑
+                                    $("#dtsIssueGrid").jsGrid("deleteItem", item);
+
+                                    console.log("“" + item["Ticket No"] + item["Brief"] + "”" + " 验证已通过");
+                                },
+                                noFn: true
+                            }
+                        });
+                    }).add($("<input>").attr("type", "button").attr("value", "失败").attr("class", "failButton_" + item["Ticket No"]).on("click", function() {
+                        easyDialog.open({
+                            container: {
+                                content: '是否确认操作？',
+                                yesFn: function() {
+                                    //todo 验证不通过
+                                    $("#dtsIssueGrid").jsGrid("deleteItem", item);
+
+                                    console.log("“" + item["Ticket No"] + item["Brief"] + "”" + " 验证未通过");
+                                },
+                                noFn: true
+                            }
+                        });
+                    }));
+                    break;
+                case "Close":
+                    return $("<input>").
+                    attr("type", "button").
+                    attr("value", "交叉验证").
+                    attr("class", "testButton_" + item["Ticket No"]).
+                    on("click", function() {
+                        easyDialog.open({
+                            container: {
+                                content: '是否确认操作？',
+                                yesFn: function() {
+                                    //todo 转测试逻辑
+                                    $("#dtsIssueGrid").jsGrid("deleteItem", item);
+
+                                    console.log("“" + item["Ticket No"] + item["Brief"] + "”" + " 转交叉验证");
+                                },
+                                noFn: true
+                            }
+                        });
+                    });
                     break;
                 default:
                     break;
             }
-
         }
     }]
 });
-
-bindClickHandler = function() {
-    for (var i = 0; i < $("input[class^='passButton']").length; i++) {
-        $($("input[class^='passButton']")[i]).bind("click", onIssueButtonClick);
-        $($("input[class^='failButton']")[i]).bind("click", onIssueButtonClick);
-    }
-
-    for (var i = 0; i < $("input[class^='testButton']").length; i++) {
-        $($("input[class^='testButton']")[i]).bind("click", onIssueButtonClick);
-    }
-};
-
-$(document).ready(function() {
-    bindClickHandler();
-});
-
-operateIssue = function(elem) {
-    issueButton = elem;
-    easyDialog.open({
-        container: {
-            content: 'Are you sure?',
-            yesFn: function() {
-
-                $("#dtsIssueGrid").jsGrid("deleteItem", issueButton.parentNode.parentNode);
-
-                if ($(issueButton).attr("class").indexOf("passButton_") != -1) {
-                    console.log($(issueButton).attr("class").replace("passButton_", "") + " Tested Passed...")
-                }
-
-                if ($(issueButton).attr("class").indexOf("failButton_") != -1) {
-                    console.log($(issueButton).attr("class").replace("failButton_", "") + " Tested Failed...")
-                }
-
-                if ($(issueButton).attr("class").indexOf("testButton_") != -1) {
-                    console.log($(issueButton).attr("class").replace("testButton_", "") + " To Cross Test...")
-                }
-
-                bindClickHandler();
-            },
-            noFn: true
-        }
-    });
-};
-
-// doFailClickButton = function(event) {
-//     operateIssue(event.target);
-//     console.log($(event.target).attr("class").replace("failButton_", "") + " Tested Failed...");
-// };
-
-// doPassClickButton = function(event) {
-//     operateIssue(event.target);
-//     console.log($(event.target).attr("class").replace("passButton_", "") + " Tested Passed...");
-// };
-
-// doTestClickButton = function(event) {
-//     operateIssue(event.target);
-//     console.log($(event.target).attr("class").replace("testButton_", "") + " To Cross Test...");
-// };
-
-onIssueButtonClick = function(event, item) {
-    operateIssue(event.target);
-};
