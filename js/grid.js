@@ -94,7 +94,7 @@ $("#dtsIssueGrid").jsGrid({
                     return $("<input>").attr("type", "button").attr("value", "通过").attr("class", "passButton_" + item["Ticket No"]).on("click", function() {
                         easyDialog.open({
                             container: {
-                                content: '是否确认操作？',
+                                content: item["Ticket No"] + '<br><hr>' + item.Brief + ' <br><hr>验证通过，确认操作？',
                                 yesFn: function() {
                                     //todo 验证通过逻辑
                                     $("#dtsIssueGrid").jsGrid("deleteItem", item);
@@ -107,7 +107,7 @@ $("#dtsIssueGrid").jsGrid({
                     }).add($("<input>").attr("type", "button").attr("value", "失败").attr("class", "failButton_" + item["Ticket No"]).on("click", function() {
                         easyDialog.open({
                             container: {
-                                content: '是否确认操作？',
+                                content: item["Ticket No"] + '<br><hr>' + item.Brief + ' <br><hr>验证失败，确认操作？',
                                 yesFn: function() {
                                     //todo 验证不通过
                                     $("#dtsIssueGrid").jsGrid("deleteItem", item);
@@ -127,7 +127,7 @@ $("#dtsIssueGrid").jsGrid({
                     on("click", function() {
                         easyDialog.open({
                             container: {
-                                content: '是否确认操作？',
+                                content: item["Ticket No"] + '<br><hr>' + item.Brief + ' <br><hr>提交验证，确认操作？',
                                 yesFn: function() {
                                     //todo 转测试逻辑
                                     $("#dtsIssueGrid").jsGrid("deleteItem", item);
