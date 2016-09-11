@@ -55,7 +55,7 @@ button::-moz-focus-inner {
 
 .easyDialog_wrapper .easyDialog_text {
     padding: 25px 10px;
-    font-size: 25;
+    font-size: 12px;
     line-height: 22px;
     color: white;
 }

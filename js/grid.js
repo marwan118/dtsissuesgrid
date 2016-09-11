@@ -10,9 +10,9 @@ onRowClicked = function(rowInfo) {
                 content: event.target.textContent
             },
             follow: event.target,
-            followX: 24,
+            followX: 200,
             followY: 24,
-            autoClose: 10000
+            autoClose: 3000
         });
     }
 
