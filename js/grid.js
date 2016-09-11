@@ -11,7 +11,7 @@ $("#dtsIssueGrid").jsGrid({
     inserting: false,
     editing: false,
     sorting: true,
-    paging: false,
+    paging: true,
     confirmDeleting: false,
     data: issues,
     fields: [{
