@@ -2,7 +2,19 @@ onRowClicked = function(rowInfo) {
     item = rowInfo.item;
     index = rowInfo.itemIndex;
     event = rowInfo.event;
-    console.log("Row Clicked.")
+    console.log("Row Clicked.");
+    if ($(event.target).attr("type") != "button" && $(event.target)[0].tagName != "A" && $(event.target).text() != "") {
+        easyDialog.open({
+            container: {
+                // header: "信息",
+                content: event.target.textContent
+            },
+            follow: event.target,
+            followX: 137,
+            followY: 24,
+        });
+    }
+
 };
 
 $("#dtsIssueGrid").jsGrid({
@@ -13,6 +25,7 @@ $("#dtsIssueGrid").jsGrid({
     sorting: true,
     paging: true,
     confirmDeleting: false,
+    rowClick: onRowClicked,
     data: issues,
     fields: [{
         name: "Ticket No",
