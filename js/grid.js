@@ -118,7 +118,7 @@ $("#dtsIssueGrid").jsGrid({
                             }
                         });
                     }));
-                    break;
+
                 case "Close":
                     return $("<input>").
                     attr("type", "button").
@@ -138,7 +138,6 @@ $("#dtsIssueGrid").jsGrid({
                             }
                         });
                     });
-                    break;
                 default:
                     break;
             }
