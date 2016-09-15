@@ -106,16 +106,20 @@
 }
 
 
-/*字体颜色*/
+/*font setting*/
 
 .jsgrid-row > .jsgrid-cell {
     background: #040404;
     color: #C0C2BA;
+    font-family: "microsoft yahei";
+    font-size: 15px;
 }
 
 .jsgrid-alt-row > .jsgrid-cell {
     background: #2d2a2a;
     color: #C0C2BA;
+    font-family: "microsoft yahei";
+    font-size: 15px;
 }
 
 .jsgrid-header-row > .jsgrid-header-cell {
